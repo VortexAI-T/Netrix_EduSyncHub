@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDUSYNCHUB - Launching Soon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Exo 2', sans-serif;
+            color: #fff;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            perspective: 1000px;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            max-width: 850px;
+            padding: 2.5rem;
+            background: rgba(0, 5, 15, 0.8);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+            animation: fadeIn 1.5s ease-out;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(66, 220, 255, 0.3);
+            z-index: 10;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(50px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(66, 220, 255, 0.1) 0%, rgba(255,255,255,0) 60%);
+            transform: rotate(0deg);
+            animation: rotate 20s linear infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .logo {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .logo h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            background: linear-gradient(to right, #42dcff, #2b90d9, #ff3cac);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: glow 2s infinite alternate;
+            margin-bottom: 0.5rem;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(66, 220, 255, 0.5); }
+            to { text-shadow: 0 0 20px rgba(66, 220, 255, 0.8), 0 0 30px rgba(66, 220, 255, 0.6); }
+        }
+        
+        .tagline {
+            font-size: 1.6rem;
+            margin-bottom: 2rem;
+            color: #f0f0f0;
+            position: relative;
+            display: inline-block;
+            font-weight: 300;
+        }
+        
+        .tagline::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #42dcff, transparent);
+            animation: linePulse 3s infinite;
+        }
+        
+        @keyframes linePulse {
+            0% { opacity: 0; width: 0%; }
+            50% { opacity: 1; width: 100%; }
+            100% { opacity: 0; width: 100%; }
+        }
+        
+        .description {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            color: #c0eef7;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            font-weight: 300;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .countdown {
+            margin-bottom: 2.5rem;
+        }
+        
+        .countdown h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #42dcff;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        #timer {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        
+        .countdown-item {
+            background: rgba(0, 20, 40, 0.6);
+            border-radius: 10px;
+            padding: 1.2rem;
+            min-width: 100px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(66, 220, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .countdown-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(66, 220, 255, 0.1), transparent);
+            pointer-events: none;
+        }
+        
+        .countdown-item:hover {
+            transform: translateY(-5px) scale(1.05);
+            background: rgba(0, 30, 50, 0.7);
+            box-shadow: 0 8px 25px rgba(66, 220, 255, 0.2);
+        }
+        
+        .countdown-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: #42dcff;
+            text-shadow: 0 0 10px rgba(66, 220, 255, 0.5);
+            margin-bottom: 0.5rem;
+        }
+        
+        .countdown-label {
+            font-size: 0.9rem;
+            color: #88e0ff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 400;
+        }
+        
+        .launch-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(to right, #42dcff, #2b90d9);
+            color: #00152e;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+        }
+        
+        .launch-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(43, 144, 217, 0.4);
+            background: linear-gradient(to right, #52e4ff, #3b9ae9);
+        }
+        
+        .launch-button:active {
+            transform: translateY(1px);
+        }
+        
+        .launch-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+        
+        .launch-button:hover::before {
+            left: 100%;
+        }
+        
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .floating-element {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(66, 220, 255, 0.15);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+            box-shadow: 0 0 15px rgba(66, 220, 255, 0.5);
+        }
+        
+        .circuit-line {
+            position: absolute;
+            background: rgba(66, 220, 255, 0.1);
+            box-shadow: 0 0 10px rgba(66, 220, 255, 0.2);
+        }
+        
+        .tech-icon {
+            position: absolute;
+            color: rgba(66, 220, 255, 0.4);
+            font-size: 1.5rem;
+            animation: floatIcon 20s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        @keyframes floatIcon {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(-120vh) translateX(120px) rotate(360deg); opacity: 0; }
+        }
+        
+        .blast {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .blast-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(66, 220, 255, 0.7) 30%, transparent 70%);
+            transform: scale(0);
+        }
+        
+        @keyframes blast {
+            0% { transform: scale(0); opacity: 1; }
+            50% { opacity: 1; }
+            100% { transform: scale(10); opacity: 0; }
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        @keyframes particle {
+            0% { transform: translate(0, 0) scale(0); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(1); opacity: 0; }
+        }
+        
+        @media (max-width: 768px) {
+            .logo h1 { font-size: 3.5rem; }
+            .tagline { font-size: 1.3rem; }
+            .description { font-size: 1.1rem; }
+            .countdown-item { min-width: 80px; padding: 1rem; }
+            .countdown-value { font-size: 2.5rem; }
+            .container { padding: 2rem; margin: 1rem; }
+        }
+        
+        @media (max-width: 480px) {
+            .logo h1 { font-size: 2.8rem; }
+            .tagline { font-size: 1.1rem; }
+            .description { font-size: 1rem; }
+            #timer { gap: 0.8rem; }
+            .countdown-item { min-width: 70px; padding: 0.8rem; }
+            .countdown-value { font-size: 2rem; }
+            .countdown-label { font-size: 0.8rem; }
+            .launch-button { padding: 1rem 2rem; font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <!-- Circuit lines -->
+        <div class="circuit-line" style="top: 15%; left: 10%; width: 100px; height: 2px;"></div>
+        <div class="circuit-line" style="top: 25%; left: 80%; width: 80px; height: 2px;"></div>
+        <div class="circuit-line" style="top: 75%; left: 5%; width: 120px; height: 2px;"></div>
+        <div class="circuit-line" style="top: 85%; left: 70%; width: 150px; height: 2px;"></div>
+        <div class="circuit-line" style="top: 30%; left: 5%; width: 2px; height: 100px;"></div>
+        <div class="circuit-line" style="top: 60%; left: 90%; width: 2px; height: 80px;"></div>
+        
+        <!-- Tech icons -->
+        <div class="tech-icon" style="top: 20%; left: 20%; animation-delay: 0s; animation-duration: 25s;"><i class="fas microchip"></i></div>
+        <div class="tech-icon" style="top: 30%; left: 80%; animation-delay: 3s; animation-duration: 20s;"><i class="fas server"></i></div>
+        <div class="tech-icon" style="top: 70%; left: 10%; animation-delay: 5s; animation-duration: 22s;"><i class="fas code"></i></div>
+        <div class="tech-icon" style="top: 80%; left: 75%; animation-delay: 7s; animation-duration: 18s;"><i class="fas database"></i></div>
+        
+        <!-- Floating elements -->
+        <div class="floating-element" style="left: 10%; animation-delay: 0s; animation-duration: 20s;"></div>
+        <div class="floating-element" style="left: 20%; animation-delay: 2s; animation-duration: 17s;"></div>
+        <div class="floating-element" style="left: 30%; animation-delay: 4s; animation-duration: 22s;"></div>
+        <div class="floating-element" style="left: 40%; animation-delay: 1s; animation-duration: 18s;"></div>
+        <div class="floating-element" style="left: 50%; animation-delay: 5s; animation-duration: 16s;"></div>
+        <div class="floating-element" style="left: 60%; animation-delay: 3s; animation-duration: 19s;"></div>
+        <div class="floating-element" style="left: 70%; animation-delay: 6s; animation-duration: 21s;"></div>
+        <div class="floating-element" style="left: 80%; animation-delay: 7s; animation-duration: 15s;"></div>
+        <div class="floating-element" style="left: 90%; animation-delay: 8s; animation-duration: 23s;"></div>
+    </div>
+    
+    <div class="container">
+        <div class="logo">
+            <h1>EDUSYNCHUB</h1>
+            <div class="tagline">Synchronizing Education with Technology</div>
+        </div>
+        
+        <div class="description">
+            EDUSYNCHUB is an innovative educational platform designed to synchronize learning experiences across devices, 
+            providing seamless access to educational resources, interactive content, and collaborative tools for students 
+            and educators worldwide. Prepare for a new era of digital learning!
+        </div>
+        
+        <div class="countdown">
+            <h2>Launching In</h2>
+            <div id="timer">
+                <div class="countdown-item">
+                    <div class="countdown-value" id="seconds">5</div>
+                    <div class="countdown-label">Seconds</div>
+                </div>
+            </div>
+        </div>
+        
+        <button class="launch-button" id="launchBtn">
+            <span id="btnText">Launch EDUSYNCHUB</span>
+            <i class="fas fa-rocket" style="margin-left: 10px;"></i>
+        </button>
+    </div>
+    
+    <div class="blast" id="blast"></div>
+
+    <script>
+        // Countdown timer
+        let seconds = 5;
+        const timerElement = document.getElementById('seconds');
+        const launchBtn = document.getElementById('launchBtn');
+        const btnText = document.getElementById('btnText');
+        const blastElement = document.getElementById('blast');
+        
+        function updateCountdown() {
+            timerElement.textContent = seconds;
+            
+            if (seconds === 0) {
+                btnText.textContent = "Enter EDUSYNCHUB";
+                launchBtn.style.background = "linear-gradient(to right, #00ffcc, #00ccff)";
+                return;
+            }
+            
+            seconds--;
+            setTimeout(updateCountdown, 1000);
+        }
+        
+        // Start the countdown
+        setTimeout(updateCountdown, 1000);
+        
+        // Add floating elements dynamically
+        const floatingContainer = document.querySelector('.floating-elements');
+        for (let i = 0; i < 15; i++) {
+            const element = document.createElement('div');
+            element.classList.add('floating-element');
+            element.style.left = Math.random() * 100 + '%';
+            element.style.animationDelay = Math.random() * 10 + 's';
+            element.style.animationDuration = (15 + Math.random() * 10) + 's';
+            element.style.width = (10 + Math.random() * 30) + 'px';
+            element.style.height = element.style.width;
+            floatingContainer.appendChild(element);
+        }
+        
+        // Add tech icons dynamically
+        const icons = ['microchip', 'server', 'code', 'database', 'network-wired', 'laptop-code', 'cloud', 'desktop'];
+        for (let i = 0; i < 12; i++) {
+            const icon = document.createElement('div');
+            icon.classList.add('tech-icon');
+            icon.style.left = Math.random() * 100 + '%';
+            icon.style.top = Math.random() * 100 + '%';
+            icon.style.animationDelay = Math.random() * 15 + 's';
+            icon.style.animationDuration = (15 + Math.random() * 15) + 's';
+            icon.innerHTML = `<i class="fas fa-${icons[Math.floor(Math.random() * icons.length)]}"></i>`;
+            floatingContainer.appendChild(icon);
+        }
+        
+        // Blast animation function
+        function createBlast() {
+            blastElement.style.opacity = "1";
+            
+            // Create main blast circle
+            const blastCircle = document.createElement('div');
+            blastCircle.classList.add('blast-circle');
+            blastCircle.style.width = '100px';
+            blastCircle.style.height = '100px';
+            blastElement.appendChild(blastCircle);
+            
+            // Animate the blast circle
+            setTimeout(() => {
+                blastCircle.style.animation = 'blast 1s forwards';
+            }, 50);
+            
+            // Create particles
+            for (let i = 0; i < 100; i++) {
+                createParticle();
+            }
+            
+            // Redirect after animation
+            setTimeout(() => {
+                window.location.href = 'http://edusynchub.mywebcommunity.org/';
+            }, 1000);
+        }
+        
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            const size = Math.random() * 10 + 5;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            // Random position around center
+            const angle = Math.random() * Math.PI * 2;
+            const distance = Math.random() * 200 + 100;
+            const tx = Math.cos(angle) * distance;
+            const ty = Math.sin(angle) * distance;
+            
+            particle.style.setProperty('--tx', `${tx}px`);
+            particle.style.setProperty('--ty', `${ty}px`);
+            
+            blastElement.appendChild(particle);
+            
+            // Animate the particle
+            setTimeout(() => {
+                particle.style.animation = `particle 1s forwards`;
+            }, 50);
+            
+            // Remove particle after animation
+            setTimeout(() => {
+                particle.remove();
+            }, 1000);
+        }
+        
+        // Add event listener to launch button
+        launchBtn.addEventListener('click', () => {
+            createBlast();
+        });
+    </script>
+</body>
+</html>

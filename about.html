@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Open+Sans&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="about.css"/>
+</head>
+
+<body data-theme="dark">
+  <div class="scroll-indicator" id="scrollIndicator"></div>
+  
+  <nav id="navbar">
+    <h1>About Us</h1>
+    <div>
+      <button class="home-btn" onclick="goHome()">Home</button>
+      <button class="toggle-theme" onclick="toggleTheme()">Toggle Theme</button>
+    </div>
+  </nav>
+
+  <div id="particles-js"></div>
+
+  <div class="hero" data-aos="fade-in">
+    <h2>We Build the Future of Technology</h2>
+  </div>
+
+  <section data-aos="fade-up">
+    <h3>Who We Are</h3>
+    <p>
+      We are a passionate team of innovators, coders, and designers working together to create immersive digital experiences. From intelligent systems to futuristic UI, our work pushes the boundaries of what's possible.
+    </p>
+  </section>
+
+  <section data-aos="fade-up" data-aos-delay="150">
+    <h3>Our Mission</h3>
+    <p>
+      Our mission is to revolutionize the tech world by blending creativity and engineering. We are committed to building clean, powerful, and intuitive solutions for the next generation.
+    </p>
+  </section>
+
+  <section data-aos="fade-up" data-aos-delay="300">
+    <h3>Why Choose Us</h3>
+    <p>
+      With a unique design philosophy, an obsession for performance, and a dedication to excellence, we stand out. We don't just build — we craft experiences that leave lasting impressions.
+    </p>
+  </section>
+
+  <footer>
+    &copy; 2025 Your Company | All Rights Reserved
+  </footer>
+
+  <!-- AOS Animation -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 1000,
+      easing: 'ease-in-out',
+      once: true,
+    });
+  </script>
+
+  <!-- Scroll Progress -->
+  <script>
+    window.onscroll = () => {
+      const scrollIndicator = document.getElementById("scrollIndicator");
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      scrollIndicator.style.width = scrolled + "%";
+
+      document.getElementById("navbar").classList.toggle("scrolled", window.scrollY > 50);
+    };
+  </script>
+
+  <!-- Theme Toggle -->
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      const current = body.getAttribute("data-theme");
+      body.setAttribute("data-theme", current === "dark" ? "light" : "dark");
+    }
+  </script>
+
+  <!-- Redirect to Home -->
+  <script>
+    function goHome() {
+      window.location.href = "index.html";
+    }
+  </script>
+
+  <!-- Particles.js -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script>
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 60 },
+        color: { value: "#00ffc3" },
+        shape: { type: "circle" },
+        opacity: { value: 0.3 },
+        size: { value: 3 },
+        line_linked: {
+          enable: true,
+          distance: 100,
+          color: "#00ffc3",
+          opacity: 0.2,
+          width: 1
+        },
+        move: {
+          enable: true,
+          speed: 1
+        }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: {
+          onhover: { enable: true, mode: "repulse" }
+        },
+        modes: {
+          repulse: { distance: 100 }
+        }
+      },
+      retina_detect: true
+    });
+  </script>
+</body>
+</html>

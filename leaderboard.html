@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaderboard | EduSyncHub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Montserrat:wght@800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    :root {
+      --primary: #6C63FF;
+      --secondary: #4D44DB;
+      --accent: #FF6584;
+      --dark: #2D3748;
+      --light: #F7FAFC;
+      --success: #4CAF50;
+      --danger: #F44336;
+      --warning: #FFC107;
+      --info: #2196F3;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { background-color: #f5f7fa; color: var(--dark); min-height: 100vh; }
+    .header { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 15px 0; position: sticky; top: 0; z-index: 100; }
+    .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; }
+    .logo-text { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.5rem; background: linear-gradient(45deg, var(--primary), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .nav-links { display: flex; gap: 20px; }
+    .nav-link { text-decoration: none; color: var(--dark); font-weight: 600; transition: color 0.3s; display: flex; align-items: center; gap: 5px; }
+    .nav-link:hover { color: var(--primary); }
+    .nav-link i { font-size: 0.9rem; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
+    .login-section { background: white; border-radius: 16px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); max-width: 500px; margin: 0 auto; animation: fadeInDown 0.5s; }
+    .login-title { font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 20px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+    .form-label { font-weight: 600; font-size: 0.9rem; }
+    .form-input { padding: 12px 15px; border-radius: 8px; border: 2px solid #eee; font-size: 1rem; transition: all 0.3s; }
+    .form-input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2); }
+    .login-btn { background: var(--primary); color: white; border: none; padding: 15px 25px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 10px; justify-content: center; }
+    .login-btn:hover { background: var(--secondary); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(108, 99, 255, 0.3); }
+    .error-message { color: var(--danger); font-size: 0.9rem; margin-top: 10px; display: none; }
+    .leaderboard-section { background: white; border-radius: 16px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); animation: fadeIn 0.5s; }
+    .leaderboard-title { font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 20px; }
+    .leaderboard-table { width: 100%; border-collapse: collapse; }
+    .leaderboard-table th, .leaderboard-table td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; }
+    .leaderboard-table th { background: #f8f9fa; font-weight: 600; color: var(--dark); }
+    .leaderboard-table tr:hover { background: rgba(108, 99, 255, 0.05); }
+    .medal { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; font-size: 1.2rem; margin-right: 8px; }
+    .medal-gold { background: linear-gradient(45deg, #FFD700, #FFA500); color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+    .medal-silver { background: linear-gradient(45deg, #C0C0C0, #A9A9A9); color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+    .medal-bronze { background: linear-gradient(45deg, #CD7F32, #A0522D); color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+    .points-badge { display: inline-flex; align-items: center; padding: 5px 10px; background: #FFF4E5; color: #D97706; border-radius: 20px; font-weight: 600; }
+    .points-badge i { margin-right: 5px; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 768px) {
+      .header-container { flex-direction: column; gap: 15px; }
+      .nav-links { width: 100%; justify-content: space-around; }
+      .leaderboard-table th, .leaderboard-table td { padding: 10px; font-size: 0.9rem; }
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+        <div class="logo-text">EduSyncHub</div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+        <a href="quiz.html" class="nav-link"><i class="fas fa-gamepad"></i> Quiz</a>
+        <a href="leaderboard.html" class="nav-link active"><i class="fas fa-trophy"></i> Leaderboard</a>
+        <a href="admin.php" class="nav-link"><i class="fas fa-user-shield"></i> Admin</a>
+        <button id="logoutBtn" class="nav-link hidden"><i class="fas fa-sign-out-alt"></i> Logout</button>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <section id="loginSection" class="login-section">
+      <h2 class="login-title">Enter Username to View Leaderboard</h2>
+      <div class="form-group">
+        <label for="loginUsername" class="form-label">Username</label>
+        <input type="text" id="loginUsername" class="form-input" required>
+      </div>
+      <button id="loginBtn" class="login-btn"><i class="fas fa-sign-in-alt"></i> View Leaderboard</button>
+      <p id="loginError" class="error-message">Username is required.</p>
+    </section>
+    <section id="leaderboardSection" class="leaderboard-section hidden">
+      <h2 class="leaderboard-title">Leaderboard</h2>
+      <table class="leaderboard-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Reward Points</th>
+            <th>Level</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardBody"></tbody>
+      </table>
+    </section>
+  </main>
+  <script>
+    function setCookie(name, value, days) {
+      const date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      const expires = "expires=" + date.toUTCString();
+      document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    }
+
+    function getCookie(name) {
+      const cname = name + "=";
+      const decodedCookie = decodeURIComponent(document.cookie);
+      const ca = decodedCookie.split(';');
+      for (let c of ca) {
+        c = c.trim();
+        if (c.indexOf(cname) === 0) {
+          return c.substring(cname.length, c.length);
+        }
+      }
+      return "";
+    }
+
+    function deleteCookie(name) {
+      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;";
+    }
+
+    function saveUserData(username, fullname, rewardPoints, level) {
+      const userData = { username, fullname, rewardPoints, level };
+      localStorage.setItem(`user_${username}`, JSON.stringify(userData));
+      updateLeaderboard(userData);
+    }
+
+    function getUserData(username) {
+      const data = localStorage.getItem(`user_${username}`);
+      return data ? JSON.parse(data) : null;
+    }
+
+    function getLeaderboard() {
+      const leaderboard = JSON.parse(localStorage.getItem('leaderboard') || '[]');
+      return leaderboard;
+    }
+
+    function updateLeaderboard(userData) {
+      let leaderboard = JSON.parse(localStorage.getItem('leaderboard') || '[]');
+      const existingUserIndex = leaderboard.findIndex(u => u.username === userData.username);
+      if (existingUserIndex >= 0) {
+        leaderboard[existingUserIndex] = userData;
+      } else {
+        leaderboard.push(userData);
+      }
+      localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
+    }
+
+    function checkLogin() {
+      const username = getCookie('username');
+      if (username) {
+        const userData = getUserData(username);
+        if (userData) {
+          document.getElementById('loginSection').classList.add('hidden');
+          document.getElementById('leaderboardSection').classList.remove('hidden');
+          document.getElementById('logoutBtn').classList.remove('hidden');
+          loadLeaderboard();
+        } else {
+          deleteCookie('username');
+          checkLogin();
+        }
+      } else {
+        document.getElementById('loginSection').classList.remove('hidden');
+        document.getElementById('leaderboardSection').classList.add('hidden');
+        document.getElementById('logoutBtn').classList.add('hidden');
+      }
+    }
+
+    function loadLeaderboard() {
+      const users = getLeaderboard();
+      users.sort((a, b) => b.rewardPoints - a.rewardPoints);
+      const tbody = document.getElementById('leaderboardBody');
+      tbody.innerHTML = '';
+      users.forEach((user, index) => {
+        let medal = '';
+        if (index === 0) {
+          medal = '<span class="medal medal-gold">🏆</span>';
+        } else if (index === 1) {
+          medal = '<span class="medal medal-silver">🥈</span>';
+        } else if (index === 2) {
+          medal = '<span class="medal medal-bronze">🥉</span>';
+        }
+        const row = document.createElement('tr');
+        row.className = `animate__animated animate__fadeIn ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`;
+        row.innerHTML = `
+          <td>${index + 1} ${medal}</td>
+          <td>${user.fullname} (${user.username})</td>
+          <td><span class="points-badge"><i class="fas fa-coins"></i> ${user.rewardPoints}</span></td>
+          <td>${user.level}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function startLeaderboardPolling() {
+      loadLeaderboard();
+      setInterval(loadLeaderboard, 10000);
+    }
+
+    document.getElementById('loginBtn').addEventListener('click', () => {
+      const username = document.getElementById('loginUsername').value.trim();
+      if (!username) {
+        document.getElementById('loginError').textContent = 'Username is required.';
+        document.getElementById('loginError').classList.remove('hidden');
+        return;
+      }
+      const userData = getUserData(username);
+      if (!userData) {
+        saveUserData(username, username, 0, 1); // Initialize new user
+      }
+      setCookie('username', username, 1);
+      document.getElementById('loginError').classList.add('hidden');
+      checkLogin();
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      deleteCookie('username');
+      checkLogin();
+    });
+
+    checkLogin();
+    startLeaderboardPolling();
+  </script>
+</body>
+</html>
